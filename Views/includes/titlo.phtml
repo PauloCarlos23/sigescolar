@@ -1,0 +1,55 @@
+<header>
+			<!-- Custom Search Starts -->
+			<div class="custom-search pull-left hidden-xs hidden-sm">
+                            <p> 
+                                <img src="public/img/logotipo.png" alt="logo" width="90" height="65" class="btn btn-rounded">
+                                <font color="white" style=" font-size: 18px; border-bottom-style: inherit; font-family: Elephant">C. E. PRIVADO PADOM</font>
+                            </p>
+			</div>
+			<!-- Custom Search Ends -->
+
+			<!-- Mini right nav starts -->
+			<div class="pull-right">
+				<ul id="mini-nav" class="clearfix">
+					<li class="list-box hidden-lg hidden-md hidden-sm" id="mob-nav">
+						<a href="#">
+							<i class="fa fa-reorder"></i>
+						</a>
+					</li>
+
+
+					<li class="list-box user-profile hidden-xs">
+                                            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                                                <ul class="nav ace-nav">
+
+                                                    </li>
+                                                    <li class="">
+                                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                                            <b> <font color="white" style=" font-size: 15px; border-bottom-style: inherit;font-family: Narkisim">Dia: <?php
+                                                                $dia = array('Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado');
+                                                                $hoje = date('w');
+                                                                $diaExtenso = $dia[$hoje];
+                                                                echo date('d-m-Y') . ' , ' . $diaExtenso . ' , ';
+                                                                ?>
+                                                                Hora: <?php echo date('H:i').'´'; ?>
+                                                             </font>
+                                                             </b>
+                                                        </a>
+
+                                                    </li>
+
+                                                 
+                                                </ul>
+                                            </div>
+					</li>
+                                        <li class="list-box user-profile hidden-xs">
+						<a href="login.html" class="user-avtar animated rubberBand">
+							<img src="public/img/user4.jpg" alt="user avatar">
+						</a>
+                                            </li>
+				</ul>
+			</div>
+			<!-- Mini right nav ends -->
+
+		</header>
+

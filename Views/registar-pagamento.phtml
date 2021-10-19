@@ -1,0 +1,475 @@
+<?php
+session_start();
+if (!isset($_SESSION['logado'])) {
+    //session_destroy();
+    Application::redirect("?controller=Index&action=index");
+}
+
+$_SESSION['idUtilizador'];
+$_SESSION['username'];
+
+?>
+
+<?php if (isset($_POST['sair'])) {
+     unset($_SESSION['logado']);
+     Application::redirect("?controller=Index&action=index");
+}
+
+$params = $this->getParams();
+$matricula = $params['dados'];
+$aluno1 = $params['dados1'];
+$classe = $params['dados2'];
+$pessoa = $params['dados3'];
+$morada = $params['dados4'];
+
+            //print_r($retorno3);
+            //die();                                                              
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Mirrored from jesus.gallery/everest/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:42:29 GMT -->
+    <head>
+
+        <?php
+        include 'includes/cabecalho.phtml';
+        ?>
+    </head>  
+
+    <body>
+        <?php
+        include 'includes/titlo.phtml';
+        ?>
+
+        <!-- Left sidebar starts -->
+        <aside id="sidebar">
+
+            <!-- Current User Starts -->
+            <?php
+        include 'includes/cabecalho_menu.phtml';
+        ?>
+            <!-- Current User Ends -->
+
+            <!-- Menu start -->
+            
+                <?php
+                include 'includes/menu.phtml';
+                ?>
+          
+            <!-- Menu End -->
+
+
+        </aside>
+        <!-- Left sidebar ends -->
+
+        <!-- Dashboard Wrapper starts -->
+        <div class="dashboard-wrapper">
+
+            <!-- Top Bar starts -->
+            <div class="top-bar">
+                <?php
+                include 'includes/titlo_page.phtml';
+                ?>
+
+            </div>
+            <!-- Top Bar ends -->
+
+            <!-- Main Container starts -->
+            <div class="main-container">
+
+                <!-- Container fluid Starts -->
+                <div class="container-fluid">
+                    <!-- Current Stats Start -->
+                    <div class="current-stats">
+                        <div class="row">
+                            
+                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                <?php
+                                        if ((isset($_GET['u'])) && ($_GET['u'] == md5(1))) {
+                                            ?>
+                                        
+                                        <div class="alert alert-success ">
+                                            <font color= "green"><i class="ace-icon fa fa-check"></i> 
+                                                <?php echo "<b>Nenhum resultado encontrado!</b>" ?> 
+                                            </font>
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                <i class="ace-icon fa fa-times"></i>
+                                            </button>
+                                        </div>
+
+                                        <?php }?>
+                            </div>
+                            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <b>Digite o N.º do Processo</b>
+                                <br>
+                                <br>
+                                <div class="center-align-text">  
+                                    <div class="blog-body">
+                                        <form class="" method="POST" name="formPesq">
+                                        <div class="input-group">
+                                            <input type="text" name="num_processo" id="" size="55" class="form-control">
+                                            <span class="input-group-btn">
+                                                <input type="hidden" name="controller" value="Pagamento_Propina">
+                                                <input type="hidden" name="action" value="obterPagamentos">
+
+                                                <button name="pesquisar" title="Pesquisar Pagamentos" class="btn btn-info" onclick="return verificar();">
+                                                    <i class="fa fa-search"></i>
+                                                    Procurar</button>
+                                            </span>
+                                        </div>
+                                        
+                                        
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript" language="javascript">
+                                function verificar(){
+                                var num_proc = formPesq.num_processo.value
+                                
+                                if(num_proc == ""){
+                                    alert("Informe o número do processo!");
+                                    return false; 
+                                }
+                                
+                                }
+                            </script>
+                            
+                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                               
+                            </div>
+                            
+                        </div>
+                        
+                        <?php   
+                        if (isset($matricula)) {
+                            ?>
+                        <hr />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="blog">
+                                        
+                                        <div class="blog-header">
+                                            <!-- Row starts -->
+                                            
+
+                                            <div class="row">
+                                                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9">
+                                                    <h4 class="blog-title"><i class="fa fa-user"></i>Dados do Aluno</h4>
+                                                </div>
+                                                
+                                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3">
+                                                     <?php
+                                                     print  '<b>'.$pessoa->getFoto().'</b>';
+                                                    ?>
+                                                   <img src="img/user6.jpg" alt="User" class="blog-post-user img-responsive">
+                                                </div>
+                                            </div>
+                                            <!-- Row ends -->
+                                        </div>
+                                        <div class="blog-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    NOME COMPLETO:
+                                                </span>
+                                            </p> 
+                                                     <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    DATA DE NASCIMENTO:
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    GENERO:
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    NATURALIDADE:
+                                                </span>
+                                            </p> 
+                                              <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    B.I/C.P N.º:
+                                                </span>
+                                            </p>
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    NOME DO PAI:
+                                                </span>
+                                            </p> 
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    NOME DA MÃE:
+                                                </span>
+                                            </p> 
+                                            </p> 
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    TELEFONE:
+                                                </span>
+                                            </p> 
+                                                   
+                                                   
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$pessoa->getNome().' '.$pessoa->getSobrenome().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                                  <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class=""> 
+                                                    <?php
+                                                     print  '<b>'.date("d/m/Y", strtotime($pessoa->getData_nascim())).'</b>';
+                                                    ?>
+                                                </span>
+                                            </p>   
+                                                  <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class=""> 
+                                                    <?php
+                                                     print  '<b>'.$pessoa->getGenero().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p>   
+                                                  <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class=""> 
+                                                    <?php
+                                                     print  '<b>'.$pessoa->getNaturalidade().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p>   
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$pessoa->getBi_cp().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$pessoa->getNome_pai().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$pessoa->getNome_mae().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$pessoa->getTelefone().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                            
+                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="blog">
+                                        
+                                        <div class="blog-header">
+                                            <!-- Row starts -->
+                                            
+
+                                            <div class="row">
+                                                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9">
+                                                    <h4 class="blog-title"><i class="fa fa-book"></i>Dados da Matrícula</h4>
+                                                </div>
+                                                
+                                               
+                                            </div>
+                                            <!-- Row ends -->
+                                        </div>
+                                        <div class="blog-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    N.º DO PROCESSO:
+                                                </span>
+                                            </p> 
+                                                     <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    ANO LECTIVO:
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    CLASSE: 
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    DATA DA MATRÍCULA:
+                                                </span>
+                                            </p> 
+                                            
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$matricula->getNum_processo().'/'.$matricula->getAno_lectivo().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                                  <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class=""> 
+                                                    <?php
+                                                     print  '<b>'.$matricula->getAno_lectivo().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p>   
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class=""> 
+                                                    <?php 
+                                                            if ($classe->getDesignacao() == 'Pre-Escolar') {
+                                                                print 'Pré-Escolar/Inic.';
+                                                            }else{
+                                                            print $classe->getDesignacao().'ª Classe';
+                                                            }?>
+                                                </span>
+                                            </p>   
+                                                  <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class=""> 
+                                                    <?php
+                                                        
+                                                        $dt = explode(" ", $matricula->getData_registo());
+                                                        
+                                                        $data = date("d/m/Y", strtotime($dt[0]));
+                                                        $hora = $dt[1];
+                                                    
+                                                     print  '<b>'.$data.' '.$hora.'</b>';
+                                                    ?>
+                                                </span>
+                                            </p>   
+                                                  
+                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="blog">
+                                        
+                                        <div class="blog-header">
+                                            <!-- Row starts -->
+                                            
+
+                                            <div class="row">
+                                                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9">
+                                                    <h4 class="blog-title"><i class="fa fa-home"></i>DADOS DA MORADA</h4>
+                                                </div>
+                                            </div>
+                                            <!-- Row ends -->
+                                        </div>
+                                        <div class="blog-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    MUNICÍPIO:
+                                                </span>
+                                            </p> 
+                                                     <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    BAIRRO:
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    RUA:
+                                                </span>
+                                            </p> 
+                                            <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                    CASA N.º:
+                                                </span>
+                                            </p> 
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$morada->getMunicipio().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$morada->getBairro().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$morada->getRua().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                                    <p class="left-align-text" style="font-size: 14px;" >
+                                                <span class="">
+                                                   <?php
+                                                     print  '<b>'.$morada->getNum_casa().'</b>';
+                                                    ?>
+                                                </span>
+                                            </p> 
+                                               
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        <?php } ?>
+                    </div>
+                    <!-- Current Stats End -->
+                    <!-- Spacer starts -->
+                    <div class="spacer">
+
+                        
+                    </div>
+                    <!-- Spacer ends -->
+
+                </div>
+                <!-- Container fluid ends -->
+            </div>
+            <!-- Main Container ends -->
+
+            
+            <?php
+            include 'includes/rodape.phtml';
+            ?>
+    </body>
+
+    <!-- Mirrored from jesus.gallery/everest/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:43:48 GMT -->
+</html>

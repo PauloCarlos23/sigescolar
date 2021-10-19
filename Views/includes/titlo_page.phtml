@@ -1,0 +1,37 @@
+<div class="page-title">
+    <div class="info">
+        <strong style="font-size: 32px; "> 
+            BEM-VINDO
+            <?php 
+               if ($_SESSION['genero'] == "MASCULINO") {
+                   print 'Sr. ';
+               }  else {
+                   print 'Sr.ª ';
+               }
+               ?> </strong>
+        <small style="font-size: 16px;"><b>
+            <?php 
+                           if ($_SESSION['funcao'] == "FINANCA" && $_SESSION['genero'] == "MASCULINO") {
+                               echo 'FINANCEIRO';
+                           }  elseif ($_SESSION['funcao'] == "FINANCA" && $_SESSION['genero'] == "FEMININO") {
+                               echo 'FINANCEIRA';
+                               
+                           }  else {
+                               print $_SESSION['funcao'];
+                           }
+             ?>
+            </b></small>
+    </div>
+
+</div>
+
+
+
+  <?php
+                    if ((isset($_GET['s'])) && ($_GET['s'] == md5(1))) {
+                        ?>
+                        <script type="text/javascript">
+                        alert("Senha alterada com sucesso!");
+                        </script>
+
+                    <?php } ?>

@@ -1,0 +1,274 @@
+<div id="menu">
+    <ul>
+        <li class="highlight">
+            <a href="?controller=Inicio&action=inicio" data-original-title="" title="">
+                <i class="fa fa-home"></i>
+                <span>Menu Principal</span>
+                <span class="current-page"></span>
+            </a>
+        </li>
+        <?php if ($_SESSION['funcao'] == 'DIRECTOR') { ?>
+            <li>
+                <a href="?controller=Funcionario&action=registar">
+                    <font color="white">
+                    <i class="fa fa-user"></i> 
+                    <span >Cadastrar funcionário</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Funcionario&action=listar">
+                    <font color="white">
+                    <i class="fa fa-users"></i> 
+                    <span>Listar funcionários</span></font>
+                </a>
+            </li>
+            <hr  class=""/>
+            <li>
+                <a href="?controller=Utilizador&action=registar">
+                    <font color="white">
+                    <i class="fa fa-user"></i> 
+                    <span >Cadastrar utilizador</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Utilizador&action=listar">
+                    <font color="white">
+                    <i class="fa fa-users"></i> 
+                    <span>Listar utilizadores</span></font>
+                </a>
+            </li>
+            <hr  class=""/>
+            <li>
+                <a href="?controller=Cliente&action=registar">
+                    <font color="white">
+                    <i class="fa fa-user"></i> 
+                    <span >Cadastrar Cliente</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Cliente&action=listar">
+                    <font color="white">
+                    <i class="fa fa-users"></i> 
+                    <span>Listar Clientes</span></font>
+                </a>
+            </li>
+            <hr  class=""/>
+
+            <li>
+                <a href="?controller=Cliente&action=listarClientes">
+                    <font color="white">
+                    <i class="fa fa-money"></i> 
+                    <span>Registar Pagamento</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Pagamento&action=listar">
+                    <font color="white">
+                    <i class="fa fa-eye"></i> 
+                    <span>Ver todos os pagamentos</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Pagamento&action=listarMovimento">
+                    <font color="white">
+                    <i class="fa fa-eye"></i> 
+                    <span>Ver pagamentos do dia</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Pagamento&action=listarMovimentoMensal">
+                    <font color="white">
+                    <i class="fa fa-eye"></i> 
+                    <span>Ver pagamentos do mês</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Pagamento&action=listarPagamentoPorMes">
+                    <font color="white">
+                    <i class="fa fa-search"></i> 
+                    <span>Pesquisar  pagamento por mês</span></font>
+                </a>
+            </li>
+            <li>
+                <a href="?controller=Pagamento&action=listarPagamentoPeloDia">
+                    <font color="white">
+                    <i class="fa fa-search"></i> 
+                    <span>Pesquisar  pagamento pelo dia</span></font>
+                </a>
+            </li>
+            <hr  class=""/>
+
+        </ul>
+<?php }
+if ($_SESSION['funcao'] == 'SUBD.ADMINISTRATIVO' || $_SESSION['funcao'] == 'SEC.ADMINISTRATIVO') {
+    ?>
+
+        <li class="has-sub">
+            <a href="#" data-original-title="" title="">
+                <i class="fa fa-book"></i> 
+                <span style="color: #ffffff">Matriculas</span>
+            </a>
+            <ul>
+                <li>
+                    <a href="?controller=Matricula&action=registar">
+                        <font color="white">
+                        <i class="fa fa-save"></i> 
+                        <span><b>Registar Matrícula</b></span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Matricula&action=alterarMatricula">
+                        <font color="white">
+                        <i class="fa fa-pencil"></i> 
+                        <span><b>Alterar Matrícula</b></span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Matricula&action=pesquisarMatricula">
+                        <font color="white">
+                        <i class="fa fa-search"></i> 
+                        <span><b>Consultar Matrícula</b></span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Matricula&action=confirmarMatricula">
+                        <font color="white">
+                        <i class="fa fa-refresh"></i> 
+                        <span><b>Confirmar Matrícula</b></span></font>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="has-sub">
+            <a href="#" data-original-title="" title="">
+                <i class="fa fa-users"></i>
+                <span style="color: #ffffff">Alunos</span>
+            </a>
+            <ul>
+
+                <li>
+                    <a href="?controller=Aluno&action=alterarDados">
+                        <font color="white">
+                        <i class="fa fa-pencil"></i> 
+                        <span><b>Alterar dados do Aluno</b></span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Aluno&action=consultarDados">
+                        <font color="white">
+                        <i class="fa fa-search"></i> 
+                        <span><b>Consultar Aluno</b></span></font>
+                    </a>
+                </li>
+            </ul>
+        </li>
+         <li class='has-sub'>
+            <a href="#" data-original-title="" title="">
+                <i class="fa fa-money"></i>
+                <span style="color: #ffffff">Pagamentos</span>
+            </a>
+            <ul>
+                <li>
+                    <a href="?controller=Pagamento_propina&action=listar">
+                        <font color="white">
+                        <i class="fa fa-table"></i> 
+                        <span>Ver todos</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarMovimento">
+                        <font color="white">
+                        <i class="fa fa-eye"></i> 
+                        <span>Ver pagamentos do dia</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarMovimentoMensal">
+                        <font color="white">
+                        <i class="fa fa-eye"></i> 
+                        <span>Ver pagamentos deste mês</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarPagamentoPorMes">
+                        <font color="white">
+                        <i class="fa fa-search"></i> 
+                        <span>Pesquisar por mês</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarPagamentoPeloDia">
+                        <font color="white">
+                        <i class="fa fa-search"></i> 
+                        <span>Pesquisar pelo dia</span></font>
+                    </a>
+                </li>
+                
+            </ul>
+        </li>
+    </ul>
+    </div>
+
+    <hr  class=""/>
+
+
+    </ul>	
+
+<?php } if ($_SESSION['funcao'] == 'FINANCA') { ?>
+
+    <li class='has-sub'>
+            <a href="#" data-original-title="" title="">
+                <i class="fa fa-money"></i>
+                <span style="color: #ffffff">Pagamentos</span>
+            </a>
+            <ul>
+                <li>
+                    <a href="?controller=Pagamento_Propina&action=registar">
+                        <font color="white">
+                        <i class="fa fa-save"></i> 
+                        <span>Registar</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento_propina&action=listar">
+                        <font color="white">
+                        <i class="fa fa-table"></i> 
+                        <span>Ver todos</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarMovimento">
+                        <font color="white">
+                        <i class="fa fa-eye"></i> 
+                        <span>Ver pagamentos do dia</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarMovimentoMensal">
+                        <font color="white">
+                        <i class="fa fa-eye"></i> 
+                        <span>Pagamentos do mês</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarPagamentoPorMes">
+                        <font color="white">
+                        <i class="fa fa-search"></i> 
+                        <span>Pesquisar por mês</span></font>
+                    </a>
+                </li>
+                <li>
+                    <a href="?controller=Pagamento&action=listarPagamentoPeloDia">
+                        <font color="white">
+                        <i class="fa fa-search"></i> 
+                        <span>Pesquisar pelo dia</span></font>
+                    </a>
+                </li>
+                
+            </ul>
+        </li>
+    </ul>
+<?php } ?>
+
+</div>
+

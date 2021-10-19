@@ -1,0 +1,259 @@
+<?php
+session_start();
+if (!isset($_SESSION['logado'])) {
+    //session_destroy();
+    Application::redirect("?controller=Index&action=index");
+}
+
+
+$_SESSION['idUtilizador'];
+$_SESSION['username'];
+?>
+
+<?php
+if (isset($_POST['sair'])) {
+    unset($_SESSION['logado']);
+    unset($_SESSION['categoria']);
+    session_destroy();
+
+    Application::redirect("?controller=Index&action=index");
+}
+?>
+
+<?php
+$params = $this->getParams();
+$pagamento = $params['dadosPagamento'];
+//$dadosMatricula = $params['dadosMatricula'];
+//$dadosPessoa = $params['dadosPessoa'];
+//$dadosClasse = $params['dadosClasse'];
+//print_r($pagamento);
+//
+//die();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+    <?php
+    include 'includes/cabecalho.phtml';
+    ?>
+
+    <body>
+        <?php
+        include 'includes/titlo.phtml';
+        ?>
+        <!-- Header ends -->
+
+        <!-- Left sidebar starts -->
+        <aside id="sidebar">
+
+            <!-- Current User Starts -->
+            <?php
+            include 'includes/cabecalho_menu.phtml';
+            ?>
+            <!-- Current User Ends -->
+
+            <!-- Menu start -->
+            <?php
+            include 'includes/menu.phtml';
+            ?>
+            <!-- Menu End -->
+
+
+
+        </aside>
+        <!-- Left sidebar ends -->
+
+        <!-- Dashboard Wrapper starts -->
+        <div class="dashboard-wrapper">
+
+            <!-- Top Bar starts -->
+            <div class="top-bar">
+                <?php
+                include 'includes/titlo_page.phtml';
+                ?>
+
+            </div>
+            <!-- Top Bar ends -->
+
+            <!-- Main Container starts -->
+            <div class="main-container">
+
+                <!-- Container fluid starts -->
+                <div class="container-fluid">
+                    <!-- Spacer starts -->
+                    <div class="spacer">
+
+                        <!-- Row Starts -->
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form method="post" action="imprimir.php">
+                                    <input type="hidden" name="codigo" value="<?php // print $retorno_->getCodigo();  ?>">
+                                    <input type="hidden" name="sobrenome" value="<?php // print $retorno_->getAlcunha();  ?>">
+                                    <input type="hidden" name="nome" value="<?php // print $retorno_->getNome();  ?>">
+                                    <div class="panel">
+                                        <?php include_once 'includes/titulo_tabela.phtml'; ?>
+
+                                        <div class="table-responsive">
+                                            <div id="dt_example" class="table-responsive example_alt_pagination clearfix">
+                                                <table class="table table-condensed table-striped table-hover table-bordered pull-left" id="data-table">    
+<!--                                                    <span> &nbsp;&nbsp;&nbsp;N. do Processo: <strong><?php // print $dadosMatricula->getNum_Processo() . '/' . $dadosMatricula->getAno_lectivo(); ?></strong></span><br><br>
+                                                    <span> &nbsp;&nbsp;&nbsp;Nome do Aluno: <strong><?php // print $dadosPessoa->getNome() . " " . $dadosPessoa->getSobrenome(); ?></strong></span><br><br>
+                                                    <span> &nbsp;&nbsp;&nbsp;Classe: <strong><?php // print $dadosClasse->getDesignacao() . 'ª'; ?></strong></span><br><br>
+                                                    <span> &nbsp;&nbsp;&nbsp;Valor da Propina: <strong><?php // print $dadosClasse->getValor_propina() . ' Kz'; ?></strong></span><br><br>-->
+
+                                                    <?php // if (isset($curso)) { ?>
+                                                        <!--<span> &nbsp;&nbsp;&nbsp;Curso: <strong><?php // print $dadosClasse->getDesignacao() . ''; ?></strong></span><br><br>-->
+                                                    <?php // } ?>
+                                                    <thead>
+                                                        <tr class="center-align-text">
+                                                            <th class="center-align-text" colspan="7">
+                                                    <h4 class="panel-title">Registo de Geral de Pagamentos</h4>
+                                                   </th>
+                                                    </tr>
+                                                    <tr>                                             
+                                                        <th style="width:7%" class="center-align-text" >#</th>
+                                                        <th style="width:25%" class="center-align-text" >Nome do aluno</th>
+                                                        <th style="width:7%" class="center-align-text">Classe</th>
+                                                        <th style="width:20%" class="center-align-text">Mês</th>
+                                                        <th style="width:8%" class="center-align-text">Ano</th>
+                                                        <th style="width:10%" class="center-align-text">Data do pagamento</th>
+                                                        <th style="width:23%" class="center-align-text">Acção</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <?php
+                                                        $pre = 0;
+                                                        $total = 0;
+
+                                                        foreach ($pagamento as $lista):
+                                                            $pre++;
+                                                           $total += $lista->getValor_propina();
+                                                            ?>
+                                                            <tr>
+
+                                                                <td class="center-align-text"><?php print $pre; ?></td>
+                                                                <td class="center-align-text"><?php print $lista->getNome_aluno(); ?></td>
+                                                                <td class="center-align-text"><?php print $lista->getClasse_aluno().'ª'; ?></td>
+                                                                <td class="center-align-text">
+                                                                    <?php
+                                                                    if ($lista->getMes() == 'MARCO') {
+                                                                        print 'MARÇO';
+                                                                    } else {
+                                                                        print $lista->getMes();
+                                                                    }
+                                                                    ?> 
+                                                                </td>
+                                                                <td class="center-align-text"> <?php print $lista->getAno(); ?>
+                                                                </td>
+                                                                <td class="center-align-text">
+                                                                    <?php
+//                                                            $data = date("d-m-Y", strtotime($lista->getData_Pagamento()));
+                                                                    print $lista->getData_pagamento();
+                                                                    ?>
+                                                                </td>
+                                                                <td class="center-align-text">
+                                                                    <a  href="?controller=Pagamento_propina&action=registar&id=<?php // print base64_encode($lista->getId());  ?>&mes=<?php // print base64_encode($lista->getMes());  ?>" title="clique aqui para registar um pagamento">
+                                                                        <i class="fa fa-money fa-2x"></i>
+                                                                    </a>
+                                                                    <a  href="?controller=Pagamento&action=imprimirMensal&id=<?php // print base64_encode($lista->getId());  ?>&mes=<?php // print base64_encode($lista->getMes());  ?>" title="clique aqui para imprimir fatura mensal">
+                                                                        <i class="fa fa-edit fa-2x"></i>
+                                                                    </a>
+                                                                    <a  href="?controller=Pagamento&action=imprimirMensal&id=<?php // print base64_encode($lista->getId());  ?>&mes=<?php // print base64_encode($lista->getMes());  ?>" title="clique aqui para imprimir fatura mensal">
+                                                                        <i class="fa fa-trash-o fa-2x"></i>
+                                                                    </a>
+                                                                    <a  href="?controller=Pagamento&action=imprimirMensal&id=<?php print base64_encode($lista->getId());  ?>&mes=<?php // print base64_encode($lista->getMes());  ?>" title="clique aqui para imprimir fatura mensal">
+                                                                        <i class="fa fa-print fa-2x"></i>
+                                                                    </a>
+                                                                </td>
+
+    <!--                                                <input type="hidden" name="ano[]" value="<?php print $lista->getAno(); ?>">
+                                                    <input type="hidden" name="meses[]" value="<?php print $lista->getMes(); ?>">
+                                                    <input type="hidden" name="data[]" value="<?php print $lista->getData_pagamento(); ?>">
+                                                    <input type="hidden" name="total" value="<?php print $total; ?>">
+                                                    <input type="hidden" name="pre" value="<?php print $pre; ?>">-->
+
+                                                            </tr>
+                                                            <?php
+                                                        endforeach;
+                                                        ?>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="">
+                                        <?php
+                                        if ($pre != 0) {
+                                            print '<button name="enviar" class="btn btn-primary btn-rounded" title="">
+                                                                    <i class="fa fa-print"></i>
+                                                                    IMPRIMIR
+                                                                </button>';
+                                        }
+                                        ?>
+
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <p class="btn btn-primary "><strong>Total pago: <?php print $total . ' Kz'; ?></strong> </p>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Row Ends -->
+
+                    </div>
+                    <!-- Spacer ends -->
+                </div>
+                <!-- Container fluid ends -->
+
+            </div>
+            <!-- Main Container ends -->
+
+
+
+            <!-- Footer starts -->
+            <?php
+            include 'includes/rodape.phtml';
+            ?>
+            <!-- Footer ends -->
+
+
+        </div>
+        <!-- Dashboard Wrapper ends -->
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="public/js/jquery.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="public/js/bootstrap.min.js"></script>
+
+        <!-- Sparkline graphs -->
+        <script src="public/js/sparkline.js"></script>
+
+        <!-- Data tables -->
+        <script src="public/js/jquery.datatables.js"></script>
+
+        <!-- jquery ScrollUp JS -->
+        <script src="public/js/scrollup/jquery.scrollUp.js"></script>
+
+        <!-- Custom Index -->
+        <script src="public/js/custom.js"></script>
+        <script src="public/js/custom-datatables.js"></script>
+    </body>
+
+    <!-- Mirrored from jesus.gallery/everest/datatables.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:45:16 GMT -->
+</html>

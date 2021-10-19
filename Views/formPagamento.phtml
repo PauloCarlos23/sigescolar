@@ -1,0 +1,240 @@
+<?php
+session_start();
+if (!isset($_SESSION['logado'])) {
+    //session_destroy();
+    Application::redirect("?controller=Index&action=index");
+}
+
+
+$_SESSION['name'] = base64_decode($_GET['name']);
+//$nome =  $_SESSION['nome']);
+//$params = $this->getParams();
+//$retorno = $params['dados'];
+//
+//print_r($retorno);
+//die();
+//echo 'Id do cliente = '.$_GET['id'];
+//die();
+?>
+
+<?php
+if (isset($_POST['sair'])) {
+    unset($_SESSION['logado']);
+     unset($_SESSION['categoria']);
+    session_destroy();
+
+    Application::redirect("?controller=Index&action=index");
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Mirrored from jesus.gallery/everest/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:42:29 GMT -->
+    <head>
+
+        <?php
+        include 'includes/cabecalho.phtml';
+        ?>
+    </head>  
+
+    <body>
+        <?php
+        include 'includes/titlo.phtml';
+        ?>
+
+        <!-- Left sidebar starts -->
+        <aside id="sidebar">
+
+            <!-- Current User Starts -->
+            <?php
+            include 'includes/cabecalho_menu.phtml';
+            ?>
+            <!-- Current User Ends -->
+
+            <!-- Menu start -->
+
+            <?php
+            include 'includes/menu.phtml';
+            ?>
+
+            <!-- Menu End -->
+
+
+        </aside>
+        <!-- Left sidebar ends -->
+
+        <!-- Dashboard Wrapper starts -->
+        <div class="dashboard-wrapper">
+
+            <!-- Top Bar starts -->
+            <div class="top-bar">
+                <?php
+                include 'includes/titlo_page.phtml';
+                ?>
+
+            </div>
+            <!-- Top Bar ends -->
+
+            <!-- Main Container starts -->
+            <div class="main-container">
+
+                <!-- Container fluid Starts -->
+                <div class="container-fluid">
+                    <!-- Form Start -->
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="blog">
+                                <div class="blog-header">
+                                    <h5 class="blog-title">  PAGAMENTO DE MENSALIDADE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-user"></i>&nbsp;<?php echo $_SESSION['name']; ?></h5>
+                                </div>
+                                <div class="blog-header">                                     <?php
+                                        if ((isset($_GET['u'])) && ($_GET['u'] == md5(1))) {
+                                            ?>
+                                            <div class="alert alert-success no-margin">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                <strong>Pagamento feito com sucesso!
+                                                </strong>
+                                            </div>
+
+                                        <?php }if ((isset($_GET['u'])) && ($_GET['u'] == md5(3))) {
+                                            ?>
+                                            <script class="alert alert-success">
+                                                alert('Não foi possivel efectuar o pagamento. Escolha pelo menos um(1) mês!');
+                                            </script>
+
+                                        <?php }if ((isset($_GET['u'])) && ($_GET['u'] == md5(4))) {
+                                            ?>
+                                            <script class="alert alert-success">
+                                                alert('Não foi possivel efectuar o pagamento. Verifique o(s) mes(es) a pagar! Talvez já tenhas pago.');
+                                            </script>
+
+                                        <?php }if ((isset($_GET['u'])) && ($_GET['u'] == md5(5))) {
+                                            ?>
+                                            <script class="alert alert-success">
+                                                alert('Não foi possivel efectuar o pagamento. Deves pagar primeiro o(s) mes(es) anteriores!');
+                                            </script>
+
+                                        <?php }if ((isset($_GET['u'])) && ($_GET['u'] == md5(2))) {
+                                            ?>
+                                            <div class="alert alert-danger no-margin">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                <strong>O(A) Aluno(a) <?php print base64_decode($_GET['name'])?> já pagou o mês de  
+                                                    <?php
+                                                    if (base64_decode($_GET['mes']) == 'MARCO') {
+                                                        echo 'MARÇO!';
+                                                    } else {
+                                                        echo base64_decode($_GET['mes']).'!';
+                                                    }
+                                                    ?>
+                                                </strong>
+                                            </div>
+                                            <?php } ?>
+                                </div>
+                                <div class="blog-body">
+                                    <form id="movieForm" method="post" name="formPagamento" novalidate="novalidate" class="bv-form">
+                                        <input type="hidden" name="idMatricula" value="<?php $_SESSION['id'] = $_GET['id']; echo $_SESSION['id'] ?>">
+                                        <input type="hidden" name="idUtilizador" value="<?php echo $_SESSION['idUtilizador']; ?>">
+                                        <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
+                                        <!--<input type="hidden" name="data" value="<?php echo base64_decode($_GET['d']); ?>">-->
+                                        <!--<input type="hidden" name="idCliente" value="<?php // echo base64_decode($_GET['d']); ?>">-->
+                                        
+                                        <div class="form-group has-feedback">
+                                            <div class="row">
+                                                <div class="col-md-3 selectContainer">
+                                                    <label class="control-label">Escolha o ano lectivo</label>
+                                                    <select class="form-control" name="ano" data-bv-field="ano">
+                                                        <?php
+//                                                        $ano = '2020';
+
+                                                        for ($ano = '2020'; $ano <= date("Y") + 1; $ano++) {
+                                                            ?>
+                                                            <option > <?php echo $ano; ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 selectContainer">
+                                                    <label class="control-label">Escolha o mês</label>
+                                                    <select class="form-control" name="mes[]" data-bv-field="mes" multiple="multiple" size="12">                                                                      
+                                                        <option value="JANEIRO">JANEIRO</option>
+                                                        <option value="FEVEREIRO">FEVEREIRO</option>
+                                                        <option value="MARCO">MARÇO</option>
+                                                        <option value="ABRIL">ABRIL</option>
+                                                        <option value="MAIO">MAIO</option>
+                                                        <option value="JUNHO">JUNHO</option>
+                                                        <option value="JULHO">JULHO</option>
+                                                        <option value="AGOSTO">AGOSTO</option>
+                                                        <option value="SETEMBRO">SETEMBRO</option>
+                                                        <option value="OUTUBRO">OUTUBRO</option>
+                                                        <option value="NOVEMBRO">NOVEMBRO</option>
+                                                        <option value="DEZEMBRO">DEZEMBRO</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="control-label">Observação</label><br>
+                                                    <textarea name="observacao" placeholder="Ex: Multa adicional de 20%" >
+                                                        
+                                                    </textarea>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="form-group has-feedback text-right">
+
+                                            <input type="hidden" name="controller" value="Pagamento_Propina">
+                                            <input type="hidden" name="action" value="cadastrar">
+                                            <button type="submit" class="btn btn-primary btn-rounded" onclick="return validarForm()">
+                                                <i class="fa fa-save"></i>
+                                                REGISTAR</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form ends -->
+
+                </div>
+                <!-- Container fluid ends -->
+            </div>
+            <!-- Main Container ends -->
+
+
+
+            <?php
+            include 'includes/rodape.phtml';
+            ?>
+
+            <script language="javascript" type="text/javascript">
+                function validarForm() {
+                    var valor = formPagamento.valor.value;
+//            var password = formPagamento.password.value;
+
+
+                    if (valor == "") {
+                        alert('Digite a quantia!');
+                        formPagamento.valor.focus();
+                        return false;
+                    }
+
+
+                }
+            </script>
+
+    </body>
+
+    <!-- Mirrored from jesus.gallery/everest/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:43:48 GMT -->
+</html>

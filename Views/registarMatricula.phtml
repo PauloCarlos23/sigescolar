@@ -1,0 +1,374 @@
+<?php
+session_start();
+if (!isset($_SESSION['logado'])) {
+    //session_destroy();
+    Application::redirect("?controller=Index&action=index");
+}
+
+$_SESSION['idUtilizador'];
+$_SESSION['username'];
+
+$params = $this->getParams();
+$retorno = $params['dados'];
+
+
+//print_r($retorno);
+//die();
+
+?>
+
+<?php if (isset($_POST['sair'])) {
+     unset($_SESSION['logado']);
+     Application::redirect("?controller=Index&action=index");
+}
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Mirrored from jesus.gallery/everest/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:42:29 GMT -->
+    <head>
+
+        <?php
+        include 'includes/cabecalho.phtml';
+        ?>
+         <script src="public/js/jquery.maskedinput.min.js"></script>
+        <script >
+            $(document).ready(function($){
+
+                $('#telefone').mask("999 999 999",{placeholder:"___ ___ ___"} );
+                 $('.input-mask-date').mask('9999/99/99');
+                 $('#bi_cp').mask('999999999aa999',{placeholder:"______________"} );
+                 $('#num_processo').mask('999999999aa99999999',{placeholder:"______________/_____"} );
+            })
+
+        </script>
+    </head>  
+
+    <body>
+        <?php
+        include 'includes/titlo.phtml';
+        ?>
+
+        <!-- Left sidebar starts -->
+        <aside id="sidebar">
+
+            <!-- Current User Starts -->
+            <?php
+        include 'includes/cabecalho_menu.phtml';
+        ?>
+            <!-- Current User Ends -->
+
+            <!-- Menu start -->
+            
+                <?php
+                include 'includes/menu.phtml';
+                ?>
+          
+            <!-- Menu End -->
+
+
+        </aside>
+        <!-- Left sidebar ends -->
+
+        <!-- Dashboard Wrapper starts -->
+        <div class="dashboard-wrapper">
+
+            <!-- Top Bar starts -->
+            <div class="top-bar">
+                <?php
+                include 'includes/titlo_page.phtml';
+                ?>
+
+            </div>
+            <!-- Top Bar ends -->
+
+            <!-- Main Container starts -->
+            <div class="main-container">
+
+                <!-- Container fluid Starts -->
+               <div class="container-fluid">
+                    <!-- Form Start -->
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="blog">
+                                
+                                <div class="blog-header">
+                                    <h5 class="blog-title"><i class="fa fa-book"></i> REGISTAR MATRÍCULA</h5>
+                                </div>
+                                                                   
+                                
+                                <div class="blog-body">
+                                    <form id="movieForm" name="formMatricula" action="" method="post" novalidate="novalidate" class="bv-form">
+                                        <?php
+                                        if ((isset($_GET['u'])) && ($_GET['u'] == md5(1))) {
+                                            ?>
+                                        
+                                        <div class="alert alert-success ">
+                                            <font color= "green"><i class="ace-icon fa fa-check"></i> 
+                                                <?php echo "<b>Matricula realizada com sucesso!</b>" ?> 
+                                            </font>
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                <i class="ace-icon fa fa-times"></i>
+                                            </button>
+                                        </div>
+
+                                        <?php }if ((isset($_GET['u'])) && ($_GET['u'] == md5(2))) {
+                                            ?>
+                                        
+                                        <div class="alert alert-danger ">
+                                            <font color= "white"><i class="ace-icon fa fa-times"></i> 
+                                                <?php echo "<b>Erro ao realizar a Matricula. Já existe aluno com o B.I/C.P especificado.!</b>" ?> 
+                                            </font>
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                <i class="ace-icon fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                            
+                                        <?php }
+                                        ?>
+                                        <div class="form-group has-feedback">
+                                            <div class="row">
+                                                <div class="col-md-4 selectContainer">
+                                                    <label class="control-label">Classe</label>
+                                                    <select class="form-control" name="idClasse" data-bv-field="genero">
+                                                        <?php 
+                                                          foreach ($retorno as $classes) {
+                                                        ?>
+                                                        <option value="<?php print $classes->getId();?>">
+                                                            <?php 
+                                                            if ($classes->getDesignacao() == 'Pre-Escolar') {
+                                                                print 'Pré/Iniciação';
+                                                            }else{
+                                                            print $classes->getDesignacao().'ª Classe';
+                                                            }?>
+                                                        </option>
+                                                        <?php }?>
+
+                                                    </select><i class="form-control-feedback" data-bv-icon-for="genero" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="genero" data-bv-result="NOT_VALIDATED" style="display: none;">The genre is required</small>
+                                                </div>
+                                                <div class="col-md-4 selectContainer">
+                                                    <label class="control-label">Valor da Matrícula</label>
+                                                    <select class="form-control" name="valor_matricula" data-bv-field="genero">
+                                                       <?php 
+//                                                          foreach ($retorno as $classes) {
+                                                        ?>
+                                                        <!--<option value="<?php // print $classes->getId();?>">-->
+                                                            <?php 
+//                                                            print $classes->getValor_matricula().' Kz';
+                                                            ?>
+                                                        <!--</option>-->
+                                                        <?php // }?>
+                                                        <option value="1500">1500 Kz </option>
+                                                        <option value="2000">2000 Kz </option>
+                                                        <option value="2500">2500 Kz </option>
+                                                        <option value="3000">3000 Kz </option>
+                                                        <option value="3500">3500 Kz </option>
+                                                        <option value="4000">4000 Kz </option>
+                                                        <option value="4500">4500 Kz </option>
+                                                        <option value="5000">5000 Kz </option>
+                                                        <option value="5500">5500 Kz </option>
+                                                        <option value="6000">6000 Kz </option>
+                                                    </select><i class="form-control-feedback" data-bv-icon-for="genero" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="genero" data-bv-result="NOT_VALIDATED" style="display: none;">The genre is required</small>
+                                                </div>
+                                                
+                                                </div>
+                                            </div>
+                                <br>
+                                        <div class="form-group has-feedback">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Nome</label>
+                                                    <input type="text" class="form-control" name="nome" required="true" data-bv-field="nome"><i class="form-control-feedback" data-bv-icon-for="title" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title must be less than 200 characters long</small>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Sobrenome</label>
+                                                    <input type="text" class="form-control" name="sobrenome" required="true" data-bv-field="sobrenome"><i class="form-control-feedback" data-bv-icon-for="title" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title must be less than 200 characters long</small>
+                                                </div>
+                                                <div class="col-md-4 selectContainer">
+                                                    <label class="control-label">Genero</label>
+                                                    <select class="form-control" name="genero" data-bv-field="genero">
+                                                        <option>MASCULINO</option>
+                                                        <option>FEMININO</option>
+
+                                                    </select><i class="form-control-feedback" data-bv-icon-for="genero" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="genero" data-bv-result="NOT_VALIDATED" style="display: none;">The genre is required</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Nome do pai</label>
+                                                    <input type="text" class="form-control" name="nome_pai" required="true" data-bv-field="nome"><i class="form-control-feedback" data-bv-icon-for="title" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title must be less than 200 characters long</small>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Nome da mãe</label>
+                                                    <input type="text" class="form-control" name="nome_mae" required="true" data-bv-field="sobrenome"><i class="form-control-feedback" data-bv-icon-for="title" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="title" data-bv-result="NOT_VALIDATED" style="display: none;">The title must be less than 200 characters long</small>
+                                                </div>
+                                                 <div class="col-md-4">
+                                                    <label class="control-label">N° B.I/C.P</label>
+                                                    <input type="text" id="" class="form-control" name="bi_cp" required="true" data-bv-field="bi_cp"><i class="form-control-feedback" data-bv-icon-for="num_bi" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="bi_cp" data-bv-result="NOT_VALIDATED" style="display: none;">The director name is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="num_bi" data-bv-result="NOT_VALIDATED" style="display: none;">The director name must be less than 80 characters long</small>
+                                                 </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Naturalidade</label>
+                                                    <input type="text" class="form-control" name="naturalidade" required="true" data-bv-field="naturalidade"><i class="form-control-feedback" data-bv-icon-for="naturalidade" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="naturalidade" data-bv-result="NOT_VALIDATED" style="display: none;">The writer name is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="naturalidade" data-bv-result="NOT_VALIDATED" style="display: none;">The writer name must be less than 80 characters long</small></div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Data de Nascimento</label>
+                                                    <div class="input-group">
+
+                                                    <input type="text" class="form-control  input-mask-date" name="data_nascim" data-date-format="yyyy-mm-dd" required="true" data-bv-field="data_nascim"><i class="form-control-feedback" data-bv-icon-for="data_nascim" style="display: none;"></i>
+                                                    <span class="input-group-addon">
+                                                <i class="fa fa-calendar bigger-110"></i>
+                                            </span>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="data_nascim" data-bv-result="NOT_VALIDATED" style="display: none;">The producer name is required</small><small class="help-block" data-bv-validator="stringLength" data-bv-for="data_nascim" data-bv-result="NOT_VALIDATED" style="display: none;">The producer name must be less than 80 characters long</small>
+                                                </div>
+                                                </div>
+                                                 <div class="col-md-4">
+                                                    <label class="control-label">Telefone</label>
+                                                    <input type="text" id="telefone" class="form-control" name="telefone" required="true" data-bv-field="website"><i class="form-control-feedback" data-bv-icon-for="telefone" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="telefone" data-bv-result="NOT_VALIDATED" style="display: none;">The website address is required</small><small class="help-block" data-bv-validator="uri" data-bv-for="telefone" data-bv-result="NOT_VALIDATED" style="display: none;">The website address is not valid</small></div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <div class="row">
+                                               <div class="col-md-3">
+                                                    <label class="control-label">Município</label>
+                                                    <input type="text" class="form-control" name="municipio" required="true" data-bv-field="bairro"><i class="form-control-feedback" data-bv-icon-for="bairro" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="rua" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is required</small><small class="help-block" data-bv-validator="uri" data-bv-for="bairro" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is not valid</small>
+                                                </div>
+                                               <div class="col-md-3">
+                                                    <label class="control-label">Bairro</label>
+                                                    <input type="text" class="form-control" name="bairro" required="true" data-bv-field="bairro"><i class="form-control-feedback" data-bv-icon-for="bairro" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="rua" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is required</small><small class="help-block" data-bv-validator="uri" data-bv-for="bairro" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is not valid</small>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">Rua</label>
+                                                    <input type="text" class="form-control" name="rua" required="true" data-bv-field="rua"><i class="form-control-feedback" data-bv-icon-for="rua" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="rua" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is required</small><small class="help-block" data-bv-validator="uri" data-bv-for="rua" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is not valid</small>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="control-label">N° da Casa</label>
+                                                    <input type="text" class="form-control" name="num_casa" required="true" data-bv-field="num_casa"><i class="form-control-feedback" data-bv-icon-for="num_casa" style="display: none;"></i>
+                                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="num_casa" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is required</small><small class="help-block" data-bv-validator="uri" data-bv-for="num_casa" data-bv-result="NOT_VALIDATED" style="display: none;">The trailer link is not valid</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                     <div class="form-group has-feedback">
+
+                                            <input type="hidden" name="controller" value="Matricula">
+                                            <input type="hidden" name="action" value="cadastrar">
+                                            <button type="submit" class="btn btn-primary btn-rounded" onclick="return validarForm()">
+                                                <i class="fa fa-save"></i>
+                                                REGISTAR</button>
+                                            <button type="reset" class="btn btn-default btn-rounded">
+                                                <i class="fa fa-undo"></i>
+                                                LIMPAR</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form ends -->
+
+                </div>
+                <!-- Container fluid ends -->
+            </div>
+            <!-- Main Container ends -->
+
+            
+            <?php
+            include 'includes/rodape.phtml';
+            ?>
+            
+             <script language="javascript" type="text/javascript">
+        function validarForm() {
+            var nome = formMatricula.nome.value;
+            var sobrenome = formMatricula.sobrenome.value;
+            var nome_pai = formMatricula.nome_pai.value;
+            var nome_mae = formMatricula.nome_mae.value;
+            var bi_cp = formMatricula.bi_cp.value;
+            var telefone = formMatricula.telefone.value;
+            var naturalidade = formMatricula.naturalidade.value;
+            var municipio = formMatricula.municipio.value;
+            var bairro = formMatricula.bairro.value;
+           
+            if (nome == "" && sobrenome == "" && telefone == "") {
+                alert('Existem campos vazios!');
+                formMatricula.nome.focus();
+                return false;
+            }
+            if (nome == "") {
+                alert('Preencha o campo nome!');
+                formMatricula.nome.focus();
+                return false;
+            }
+           
+            if (sobrenome == "") {
+                alert('Preencha o campo sobrenome!');
+                formMatricula.sobrenome.focus();
+                return false;
+            }
+           
+            if (telefone == "") {
+                alert('Preencha o campo telefone!');
+                formMatricula.telefone.focus();
+                return false;
+            }
+            if (nome_pai == "") {
+                alert('Preencha o campo nome do pai!');
+                formMatricula.nome_pai.focus();
+                return false;
+            }
+            if (nome_mae == "") {
+                alert('Preencha o campo nome da mãe!');
+                formMatricula.nome_mae.focus();
+                return false;
+            }
+            if (bi_cp == "") {
+                alert('Preencha o campo B.I/C.P!');
+                formMatricula.bi_cp.focus();
+                return false;
+            }
+            if (naturalidade == "") {
+                alert('Preencha o campo naturalidade!');
+                formMatricula.naturalidade.focus();
+                return false;
+            }
+            if (municipio == "") {
+                alert('Preencha o campo municipio!');
+                formMatricula.municipio.focus();
+                return false;
+            }
+            if (bairro == "") {
+                alert('Preencha o campo bairro!');
+                formMatricula.bairro.focus();
+                return false;
+            }
+           
+        }
+                </script>
+    </body>
+
+    <!-- Mirrored from jesus.gallery/everest/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Apr 2015 10:43:48 GMT -->
+</html>
